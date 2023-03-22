@@ -1,5 +1,7 @@
 package Calculator;
 
+import java.util.ArrayList;
+
 public class RomanNumeraltoDecimal {
     String I = "1";
     String V = "5";
@@ -45,19 +47,23 @@ public class RomanNumeraltoDecimal {
     }
     public boolean isValidRomanNumeral() {
         numeral = numeral.toUpperCase();
+        ArrayList<Integer> numeralValueList = new ArrayList<>();
         for (int i = 0; i < numeral.length(); i++) {
             String letter = String.valueOf(numeral.charAt(i));
             if (!letter.equals("I") && !letter.equals("V") && !letter.equals("X") && !letter.equals("L") && !letter.equals("C") && !letter.equals("D") && !letter.equals("M")) {
                 System.out.println("Input is invalid: " + numeral);
                 return false;
             }
-            if(i+1 < numeral.length()){
-                int val1 = getValueOfNumeral(String.valueOf(numeral.charAt(i)));
-                int val2 = getValueOfNumeral(String.valueOf(numeral.charAt(i+1)));
-                if(10*val1 < val2){
+            int val = getValueOfNumeral(String.valueOf(numeral.charAt(i)));
+            for (int j: numeralValueList) {
+                if(val > j*10+1){
+                    return false;
+                }
+                if(val/2 == j){
                     return false;
                 }
             }
+            numeralValueList.add(val);
         }
         return true;
     }
