@@ -17,24 +17,31 @@ public class RomanNumeralCalculator {
             System.out.println("No input");
         }
         RomanNumeralCalculator calculator = new RomanNumeralCalculator(userInput);
-        calculator.convertedNumber = calculator.calculateNumber(userInput, calculator.notconvertedNumber);
-        System.out.println("Converted Number: " + calculator.convertedNumber);
+        calculator.convertedNumber = calculator.calculateNumber(calculator.notconvertedNumber);
+        if(calculator.convertedNumber == null){
+            System.out.println("Invalid Number: "+ calculator.notconvertedNumber);
+        }
+        else{
+            System.out.println("Converted Number: " + calculator.convertedNumber);
+        }
     }
 
-    public String calculateNumber(String userInput, String notconvertedNumber){
+    public String calculateNumber(String notconvertedNumber){
         String number = null;
         //Check to see if the user input is a roman numeral or a decimal, or invalid
-        if(userInput.chars().allMatch(Character::isAlphabetic)){ //is roman numeral
+        if(notconvertedNumber.chars().allMatch(Character::isLetter)){ //is roman numeral
             RomanNumeraltoDecimal converter = new RomanNumeraltoDecimal(notconvertedNumber);
             number = converter.RomanNumeralConverter();
         }
-        else if(userInput.chars().allMatch(Character::isDigit)){ //is deciaml
+        else if(notconvertedNumber.chars().allMatch(Character::isDigit)){ //is deciaml
             DeciamltoRomanNumeral converter = new DeciamltoRomanNumeral(notconvertedNumber);
             number = converter.DecimalConverter();
         }
         else{
-            System.out.println("Input is invalid: " + userInput);
+            System.out.println("Input is invalid: " + notconvertedNumber);
         }
         return number;
     }
+
+
 }
